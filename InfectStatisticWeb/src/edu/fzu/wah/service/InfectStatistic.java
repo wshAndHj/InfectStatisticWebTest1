@@ -3,6 +3,7 @@ package edu.fzu.wah.service;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.nio.channels.WritableByteChannel;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -89,6 +90,7 @@ public class InfectStatistic {
 		            processDate(date);
 		            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		            for (String fileDateString : fileList) {
+		            	System.out.println(fileDateString);
 		                File file = new File(dir.getPath() + "/" + fileDateString + ".log.txt");
 		                Date fileDate = simpleDateFormat.parse(fileDateString);//日志日期
 		                if (date != null && fileDate.compareTo(date) > 0) {
@@ -96,11 +98,18 @@ public class InfectStatistic {
 		                }
 		                reader = new BufferedReader(new FileReader(file));
 		                while ((line = reader.readLine()) != null) {
-		                    if (line.charAt(0) != '/') {//该行不为注释
+		                	//System.out.println(line);
+		                    if (line.length() > 1 && line.charAt(0) != '/') {//该行不为注释
 		                        updateProvinceInfo(line);
 		                    }
 		                }
 		            }
+		            ProvinceInfo countryInfo = new ProvinceInfo("全国");
+		            countryInfo.setCureNum(cureTotalNum);
+		            countryInfo.setDiedNum(diedTotalNum);
+		            countryInfo.setInfectNum(infectTotalNum);
+		            countryInfo.setSuspectedNum(suspectedTotalNum);
+		            provinceMap.put("全国", countryInfo);
 		        }catch (Exception e){
 
 		        }
@@ -164,6 +173,7 @@ public class InfectStatistic {
 
 		    public void output(String outputPath, ArrayList<String>provinceList, HashMap<String, Integer> typeMap){
 		        try {
+		        	System.out.println("outputPath:" + outputPath);
 		            Formatter writer = new Formatter(outputPath);
 		            int infectNum, suspectedNum, cureNum, diedNum;
 		            int infectDoesShow, suspectedDoesShow, cureDoesShow, diedDoesShow;
@@ -209,8 +219,10 @@ public class InfectStatistic {
 		            }
 
 		            writer.flush();
+		            writer.close();
 		        }catch (Exception e){
 		            e.printStackTrace();
+		        }finally {
 		        }
 		    }
 }

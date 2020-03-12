@@ -74,6 +74,22 @@ public class ProvinceInfo {
     public void setDoesRefered(boolean doesRefered) {
         this.doesRefered = doesRefered;
     }
+    
+	public void setInfectNum(int infectNum) {
+		this.infectNum = infectNum;
+	}
+
+	public void setDiedNum(int diedNum) {
+		this.diedNum = diedNum;
+	}
+
+	public void setCureNum(int cureNum) {
+		this.cureNum = cureNum;
+	}
+	
+	public void setSuspectedNum(int suspectedNum) {
+		this.suspectedNum = suspectedNum;
+	}
 
     public void output(Formatter writer, HashMap<String, Integer> typeMap) {
         int infectDoesShow, suspectedDoesShow, cureDoesShow, diedDoesShow;

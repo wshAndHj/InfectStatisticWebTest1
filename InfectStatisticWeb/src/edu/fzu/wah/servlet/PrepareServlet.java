@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import edu.fzu.wah.pojo.ProvinceInfo;
 import edu.fzu.wah.service.InfectStatistic;
 import edu.fzu.wah.service.ProcessParameter;
 
@@ -43,7 +44,11 @@ public class PrepareServlet extends HttpServlet {//该类用于最初的调用be
 		String []args = parameters.split(" ");
 		ProcessParameter processParameter = new ProcessParameter();
 		processParameter.processParameters(args);
-		processParameter.statistic();//开始统计
+		//开始统计
+		InfectStatistic infectStatistic = new InfectStatistic();
+        infectStatistic.statistic(processParameter.getLogDir(), processParameter.getDate());
+        HashMap<String, ProvinceInfo> allProvinceInfos = infectStatistic.getProvinceMap();
+        System.out.print(allProvinceInfos.get("全国").getCureNum());
 	}
 
 	/**

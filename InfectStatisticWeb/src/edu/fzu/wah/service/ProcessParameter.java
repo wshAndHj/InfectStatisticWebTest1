@@ -79,7 +79,7 @@ public class ProcessParameter {
         //开始统计
         InfectStatistic infectStatistic = new InfectStatistic();
         infectStatistic.statistic(logDir, date);
-        infectStatistic.output(outputPath, provinceList, typeMap);
+        //infectStatistic.output(outputPath, provinceList, typeMap);
     }
 
 
